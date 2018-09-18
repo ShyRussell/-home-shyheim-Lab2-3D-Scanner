@@ -14,8 +14,9 @@ const int SENSOR = A2;
 const int servoPin = 3;
 const int servoPin2= 10;
 const int potPin1 = A3;
-const int potPin2 = 9;
+const int potPin2 = A4;
 int var;
+int vas;
 
 void setup() {
   // start the serial port
@@ -54,12 +55,12 @@ void scan(int resolution){
     column += STEP;
     pan(column);                        //move over one step
     delay(50);
-
-    //scans in the other direction
+//
+//    //scans in the other direction
     for(int d2 = 50; d2 > -10; d2 -= STEP){ 
       tilt(d2);
       val = getDistance();
-      
+//      
       Serial.print(d2);
       Serial.print(",");
       Serial.print(column);
@@ -71,7 +72,7 @@ void scan(int resolution){
     pan(column);
     delay(50);
   }                                     // end scanning loop
-  
+ 
     pan(0);                             // reset to pointing straight ahead
     tilt(0);                            // (mostly for show)
 }
@@ -81,47 +82,30 @@ void scan(int resolution){
 //
 void loop()
 {  
-//  int a, b, c, d;
+  int a, b, c, d;
 //
-//  a = 0;
-//  b = 0;
-//  c = 0;
-//  d = 0;
-//
-//  //
-//  // loop: calculate the data, then send it from the Arduino to the phython program
-//  //
-//  while(true) {
-//    //
-//    // here is where you update the data to be sent
-//    //
-//    a = a + 1;    // a counts by 1s
-//    b = b + 2;    // b counts by 2s
-//    c = c + 3;    // c counts by 3s
-//    d = d + 4;    // d counts by 4s
-//
-//
-//    //
-//    // transmit one line of text to phython with 4 numeric values
-//    // NOTE: commas are sent between values, after the last value a Newline is sent
-//    //
-//    Serial.print(a);    Serial.print(",");
-//    Serial.print(b);    Serial.print(",");
-//    Serial.print(c);    Serial.print(",");
-//    Serial.println(d);
-//
-//
-//    //
-//    // delay after sending data so the serial connection is not over run
-//    //
-//    delay(400);
-//  }
+  a = 0;
+  b = 0;
+  c = 0;
+  d = 0;
+
+  //
+  // loop: calculate the data, then send it from the Arduino to the phython program
+  //
+//  /
 
   var = analogRead(potPin1);            //reads the potentiomeeter with a value between 1 to 1023
   var = map(var, 0, 1023, 0, 179);      //scale it using the servo with values between 0 and 180
 
   Servo1.write(var);                    //Sets the servo position according to the scaled values 
   Serial.println(var);                  //output the value
+  delay(15);                            //waits for the servo to get there
+
+  vas = analogRead(potPin2);
+  vas = map(vas, 0, 1023, 0, 179);
+  
+  Servo2.write(vas);                    //Sets the servo position according to the scaled values 
+  Serial.println(vas);                  //output the value
   delay(15);                            //waits for the servo to get there
   
   establishContact(); // wait until a keypress comes across the line
@@ -179,19 +163,19 @@ double getDistance() {
   delay(10);
   
   distance = distance / 3.0;
-  
+ 
   // fit on the calibration data (calculated in Matlab)
-  // y = p1*x^4 + p2*x^3 + p3*x^2 + p4*x + p5 
+//    y = p1*x^4 + p2*x^3 + p3*x^2 + p4*x + p5 
 
-  //  Coefficients:
-  //    p1 = 1.7565e-09
-  //    p2 = -3.1001e-06
-  //    p3 = 0.0020337
-  //    p4 = -0.62428
-  //    p5 = 89.447
+//    Coefficients:
+//      p1 = 1.7565e-09
+//      p2 = -3.1001e-06
+//      p3 = 0.0020337
+//      p4 = -0.62428
+//      p5 = 89.447
   
   distance = 1.7565e-09 * pow(distance,4) + -3.1001e-06 * pow(distance,3) + 0.0020337 * pow(distance,2) + -0.62428 * distance + 89.447;
   
-  // returns distance in inches
+   // returns distance in inches
   return distance;
 }
