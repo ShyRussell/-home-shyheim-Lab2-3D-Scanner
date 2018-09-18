@@ -1,5 +1,5 @@
 import serial
-
+from datetime import datetime
 #
 # Note 1: This python script was designed to run with Python 3.
 #
@@ -22,6 +22,10 @@ import serial
 # For Apple computers, the name is formatted like: "/dev/tty.usbmodemfa141"
 #
 arduinoComPort = "/dev/ttyACM0"
+currentcounter = 0
+previouscounter = 0
+
+
 
 
 #
@@ -43,29 +47,22 @@ print(serialPort)
 #
 # main loop to read data from the Arduino, then display it
 #
+
 while True:
   #
   # ask for a line of data from the serial port, the ".decode()" converts the
   # data from an "array of bytes", to a string
   #
   lineOfData = serialPort.readline().decode()
-
-  #
-  # check if data was received
-  #
+  # check if data was recieved
   if len(lineOfData) > 0:
-    #
-    # data was received, convert it into 4 integers
-    #
-    try:
-
-        a, b, c, d = (int(x) for x in lineOfData.split(','))
-    except ValueError:
-        continue
-    #
-    # print the results
-    #
-    print("a = " + str(a), end="")
-    print(", b = " + str(b), end="")
-    print(", c = " + str(c), end="")
-    print(", d = " + str(d))
+    currentcounter = previouscounter + 1
+  if currentcounter > previouscounter
+    previouscounter = currentcounter
+    # write data to file
+    path = "datalog.txt" % (str(datetime.now()),sensor);
+    ser = serial.Serial(serialport,baudrate)
+    with open(path,'wt') as f;
+    	while True:
+    		line = ser.readline()
+    		f.writelines([line.strip(),"t= %s \n" %(datetime.now())])
