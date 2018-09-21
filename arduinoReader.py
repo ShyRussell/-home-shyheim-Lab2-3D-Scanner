@@ -47,7 +47,32 @@ print(serialPort)
 #
 # main loop to read data from the Arduino, then display it
 #
+#///////////////////////////////////////////////////////////////////////////////
+#Calculate and store data in both inches and centimeters
+# Calculate distance in CM
+distancecm = 10650.08 * pow(serialPort,-0.935) - 10
+# Write data to file
+path = "distcmdata.txt" % (str(datetime.now()),distancecm)
+sercm = serial.Serial(distancecm,baudRate)
+with open(path,'wt') as f;
+    while True
+        linecm = sercm.readline()
+        f.writelines([linecm.strip(),"t= %s \n" %(datetime.now())])
 
+
+#Calculate distance in IN
+distancein = 4192.936 * pow(serialPort,-0.935) - 3.93
+# Write data to file
+path = "distindata.txt" % (str(datetime.now()),distancein)
+serin = serial.Serial(distancein,baudRate)
+with open(path,'wt') as f;
+    while True
+        linein = serin.readline()
+        f.writelines([linein.strip(),"t= %s \n" %(datetime.now())])
+
+
+#//////////////////////////////////////////////////////////////////////////////
+#Store raw data
 while True:
   #
   # ask for a line of data from the serial port, the ".decode()" converts the
