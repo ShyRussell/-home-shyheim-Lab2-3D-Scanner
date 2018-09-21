@@ -19,6 +19,7 @@ const int potPin2 = A4;
 
 int var;
 int vas;
+int pos = 9;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
@@ -26,45 +27,58 @@ void setup() {
   Serial.begin(baudRate);               // NOTE2: Set the baudRate to 115200 for faster communication
   Servo1.attach(servoPin);
   Servo2.attach(servoPin2);
-//  pan(0);
-//  tilt(0);
 }
 
 
-
-///
+//
 
 
 /////////////////////////////////// main loop /////////////////////////////////////////
 
 void loop()
 {  
-  int a, b, c, d;
+   ///Servo Movement with potentiometer
+    
+//  var = analogRead(potPin1);            //reads the potentiomeeter with a value between 1 to 1023
+//  var = map(var, 0, 1023, 0, 179);      //scale it using the servo with values between 0 and 180
 //
-  a = 0;
-  b = 0;
-  c = 0;
-  d = 0;
+//  Servo1.write(var);                    //Sets the servo position according to the scaled values 
+//  Serial.println(var);                  //output the value
+//  delay(15);                            //waits for the servo to get there
+//
+//  vas = analogRead(potPin2);
+//  vas = map(vas, 0, 1023, 0, 179);
+//  
+//  Servo2.write(vas);                    //Sets the servo position according to the scaled values 
+//  Serial.println(vas);                  //output the value
+//  delay(15);                            //waits for the servo to get there
 
-  //
-  // loop: calculate the data, then send it from the Arduino to the phython program
-  //
-//  /
-
-  var = analogRead(potPin1);            //reads the potentiomeeter with a value between 1 to 1023
-  var = map(var, 0, 1023, 0, 179);      //scale it using the servo with values between 0 and 180
-
-  Servo1.write(var);                    //Sets the servo position according to the scaled values 
-  Serial.println(var);                  //output the value
-  delay(15);                            //waits for the servo to get there
-
-  vas = analogRead(potPin2);
-  vas = map(vas, 0, 1023, 0, 179);
+///////////////////////////////////////////////////////////////////////////////////////////////////
+  ///Servo1 Movement on its own 
   
-  Servo2.write(vas);                    //Sets the servo position according to the scaled values 
-  Serial.println(vas);                  //output the value
-  delay(15);                            //waits for the servo to get there
+   for(pos = 0; pos < 180; pos += 1)  // goes from 0 degrees to 180 degrees
+  {                                  // in steps of 1 degree
+    Servo1.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for(pos = 180; pos>=1; pos-=1)     // goes from 180 degrees to 0 degrees
+  {                               
+    Servo1.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+///////////////////////////////////////////////////////////////////////////////////////////////////
+  ///Servo2 Movemnt on its own
   
+  for(pos = 0; pos < 180; pos += 1)  // goes from 0 degrees to 180 degrees
+  {                                  // in steps of 1 degree
+    Servo2.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for(pos = 180; pos>=1; pos-=1)     // goes from 180 degrees to 0 degrees
+  {                               
+    Servo2.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
 ///
 }
 
