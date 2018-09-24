@@ -54,8 +54,8 @@ distancecm = 10650.08 * pow(serialPort,-0.935) - 10
 # Write data to file
 path = "distcmdata.txt" % (str(datetime.now()),distancecm)
 sercm = serial.Serial(distancecm,baudRate)
-with open(path,'wt') as f;
-    while True
+with open(path,'wt') as f:
+    while True:
         linecm = sercm.readline()
         f.writelines([linecm.strip(),"t= %s \n" %(datetime.now())])
 
@@ -65,8 +65,8 @@ distancein = 4192.936 * pow(serialPort,-0.935) - 3.93
 # Write data to file
 path = "distindata.txt" % (str(datetime.now()),distancein)
 serin = serial.Serial(distancein,baudRate)
-with open(path,'wt') as f;
-    while True
+with open(path,'wt') as f:
+    while True:
         linein = serin.readline()
         f.writelines([linein.strip(),"t= %s \n" %(datetime.now())])
 
@@ -82,12 +82,12 @@ while True:
   # check if data was recieved
   if len(lineOfData) > 0:
     currentcounter = previouscounter + 1
-  if currentcounter > previouscounter
+  if currentcounter > previouscounter:
     previouscounter = currentcounter
     # write data to file
     path = "datalog.txt" % (str(datetime.now()),sensor);
     ser = serial.Serial(serialport,baudrate)
-    with open(path,'wt') as f;
+    with open(path,'wt') as f:
     	while True:
     		line = ser.readline()
     		f.writelines([line.strip(),"t= %s \n" %(datetime.now())])
