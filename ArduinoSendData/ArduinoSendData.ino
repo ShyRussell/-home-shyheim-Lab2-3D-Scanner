@@ -8,17 +8,19 @@ Servo Servo2;
 
 int baudRate = 9600;                 // NOTE1: The baudRate for sending & receiving programs must match
 
-const int SENSOR = A2;
+const int SENSOR = 4;
 
 const int servoPin = 3;
 const int servoPin2= 10;
 
 int sensorVal = 0;                          // variable to storw the value coming from the sensor, set to 0 initially
-int pos = 0;
+int pos = 180;
+int value = 0;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
   // start the serial port
+  
   Serial.begin(baudRate);               // NOTE2: Set the baudRate to 115200 for faster communication
   Servo1.attach(servoPin);
   Servo2.attach(servoPin2);
@@ -34,9 +36,10 @@ void loop()
 {  
    /// Infrared Distance Sensor Calibration code
 
+    value = analogRead(SENSOR);
+    Serial.println(value);
+    delay(100);
     
-    Serial.println(analogRead(SENSOR));                // print a sensor value to the serial port
-    delay(2000);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
   ///Servo1 Movement on its own 
