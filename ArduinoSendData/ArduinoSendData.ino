@@ -57,12 +57,11 @@ void loop()
 //    Servo1.write(pos1);                          // tell servo to go to position in variable 'pos'
 ////    delay(100);                                  // waits 15ms for the servo to reach the position
     value = analogRead(SENSOR);
-    Serial.println(pos);
-    Serial.print(';');
+    Serial.print(pos);
+    Serial.print(',');
     Serial.print(pos1);
-    Serial.print(';');
-    Serial.print(value);
-    Serial.print(';');
+    Serial.print(',');
+    Serial.println(value);
     delay(50);
   }
   }
@@ -77,16 +76,17 @@ void loop()
 //    Servo1.write(pos1);                          // tell servo to go to position in variable 'pos'
 ////    delay(100);                                  // waits 15ms for the servo to reach the position
     value = analogRead(SENSOR);
-    Serial.println(pos);
-    Serial.print(';');
+    Serial.print(pos);
+    Serial.print(',');
     Serial.print(pos1);
-    Serial.print(';');
-    Serial.print(value);
-    Serial.print(';');
+    Serial.print(',');
+    Serial.println(value);
     delay(50);
   }
   
-  }}
+  }
+  while(1){}
+  }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
