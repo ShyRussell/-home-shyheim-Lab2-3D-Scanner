@@ -1,5 +1,8 @@
 import serial
 from datetime import datetime
+import numpy
+import matplotlib.pyplot as pyplot
+from drawnow import *
 #
 # Note 1: This python script was designed to run with Python 3.
 #
@@ -21,7 +24,7 @@ from datetime import datetime
 # For Windows computers, the name is formatted like: "COM6"
 # For Apple computers, the name is formatted like: "/dev/tty.usbmodemfa141"
 #
-arduinoComPort = "/dev/ttyACM0"
+arduinoComPort = "COM6"
 currentcounter = 0
 previouscounter = 0
 
@@ -43,14 +46,16 @@ baudRate = 9600
 serialPort = serial.Serial(arduinoComPort, baudRate, timeout=1)
 
 print(serialPort)
-
+plt.ion()
+cnt = 0
+value = []
 #
 # main loop to read data from the Arduino, then display it
 #
 #///////////////////////////////////////////////////////////////////////////////
 #Calculate and store data in both inches and centimeters
 # Calculate distance in CM
-distancecm = 10650.08 * pow(serialPort,-0.935) - 10
+distancecm = -0.0000196*pow(serialPort,3) + 0.0251*pow(serialPort,2) - 7.3743*serialPort + 678.303
 # Write data to file
 path = "distcmdata.txt" % (str(datetime.now()),distancecm)
 sercm = serial.Serial(distancecm,baudRate)
@@ -61,15 +66,18 @@ with open(path,'wt') as f:
 
 
 #Calculate distance in IN
-distancein = 4192.936 * pow(serialPort,-0.935) - 3.93
+#distancein = 4192.936 * pow(serialPort,-0.935) - 3.93
 # Write data to file
-path = "distindata.txt" % (str(datetime.now()),distancein)
-serin = serial.Serial(distancein,baudRate)
-with open(path,'wt') as f:
-    while True:
-        linein = serin.readline()
-        f.writelines([linein.strip(),"t= %s \n" %(datetime.now())])
-
+#path = "distindata.txt" % (str(datetime.now()),distancein)
+#serin = serial.Serial(distancein,baudRate)
+#with open(path,'wt') as f:
+#    while True:
+#        linein = serin.readline()
+#        f.writelines([linein.strip(),"t= %s \n" %(datetime.now())])
+def makefig():
+    plt.title('Visualization')
+    plt.grid(True)
+    plt.plot(value, 'ro')
 
 #//////////////////////////////////////////////////////////////////////////////
 #Store raw data
